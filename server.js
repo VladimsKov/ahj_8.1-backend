@@ -101,14 +101,13 @@ wsServer.on('connection', (ws) => {
       case 'output' :
       const idx = users.findIndex(item => item.nickname === data.name);
       users.splice(idx, 1);
-      const delUserName = data.name;
-      
+            
       Array.from(wsServer.clients)
       .filter(client => client.readyState === WS.OPEN && client !== ws)
       .forEach(client => {
         const msg = {
           type: 'out_user',
-          name: delUserName            
+          name: data.name            
         }
         client.send(JSON.stringify(msg));          
       });
